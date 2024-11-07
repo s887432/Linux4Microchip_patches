@@ -28,10 +28,6 @@ index 0000000..42d6676
 +ifconfig eth1 192.168.2.10
 +ethtool --set-plca-cfg eth1 enable on node-id 0 node-cnt 8 to-tmr 0x20 burst-cnt 0x0 burst-tmr 0x80
 +
-diff --git a/board/microchip/sama5d2/fs-overlay/root/t1s_server b/board/microchip/sama5d2/fs-overlay/root/t1s_server
-new file mode 100755
-index 0000000..e9b3f07
-Binary files /dev/null and b/board/microchip/sama5d2/fs-overlay/root/t1s_server differ
 diff --git a/package/linux/0000_linux_t1s-2024.04.patch b/package/linux/0000_linux_t1s-2024.04.patch
 new file mode 100644
 index 0000000..ba3ce6a
