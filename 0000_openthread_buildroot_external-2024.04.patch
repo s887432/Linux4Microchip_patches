@@ -1,0 +1,60 @@
+diff --git a/Config.in b/Config.in
+index 05e04da..011dc93 100644
+--- a/Config.in
++++ b/Config.in
+@@ -44,3 +44,8 @@ source "$BR2_EXTERNAL_MCHP_PATH/system/Config.in"
+ source "$BR2_EXTERNAL_MCHP_PATH/package/libosmscout/Config.in"
+ 
+ source "$BR2_EXTERNAL_MCHP_PATH/package/video-capture-at91/Config.in"
++
++menu "Patrick Extension"
++	source "$BR2_EXTERNAL_MCHP_PATH/package/openthread/Config.in"
++endmenu
++
+diff --git a/package/openthread/Config.in b/package/openthread/Config.in
+new file mode 100644
+index 0000000..0c5bbd3
+--- /dev/null
++++ b/package/openthread/Config.in
+@@ -0,0 +1,5 @@
++config BR2_PACKAGE_OPENTHREAD
++    bool "openthread"
++    help
++      OpenThread is an open-source implementation of the Thread networking protocol.
++
+diff --git a/package/openthread/openthread.mk b/package/openthread/openthread.mk
+new file mode 100644
+index 0000000..e3a1a3a
+--- /dev/null
++++ b/package/openthread/openthread.mk
+@@ -0,0 +1,30 @@
++################################################################################
++# OpenThread Buildroot Package
++################################################################################
++OPENTHREAD_VERSION = thread-reference-20230710
++DT_OVERLAY_MCHP_SITE = $(call github,openthread,ot-br-posix,v$(OPENTHREAD_VERSION))
++
++# OpenThread requires the following dependencies
++OPENTHREAD_DEPENDENCIES = libnl
++
++# Package settings
++OPENTHREAD_INSTALL_STAGING = YES
++OPENTHREAD_INSTALL_LIBSTDCPP = YES
++
++# Build the package
++define OPENTHREAD_BUILD_CMDS
++    $(MAKE) -C $(@D) -f Makefile -j$(BR2_JOBS)
++endef
++
++define OPENTHREAD_INSTALL_CMDS
++    $(MAKE) -C $(@D) -f Makefile install
++endef
++
++# Package information
++OPENTHREAD_LICENSE = BSD-3-Clause
++OPENTHREAD_LICENSE_FILES = LICENSE
++OPENTHREAD_SITE = https://github.com/openthread/openthread
++
++# Add OpenThread to Buildroot's package system
++$(eval $(generic-package))
++
